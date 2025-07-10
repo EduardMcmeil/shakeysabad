@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supercard - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html" class="active">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html">About</a></li> <!-- optional -->
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- JS will inject Login/Logout & Cart -->
+    </div>
+  </header>
+
+  <!-- Category Bar -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='menu.html'">All Menu</div>
+    <div class="category-item" onclick="location.href='promos.html'">Promos</div>
+    <div class="category-item" onclick="location.href='supercard.html'">Supercard</div>
+  </section>
+
+  <!-- Supercard Content -->
+  <section class="featured-products">
+    <h2>Shakey’s Supercard</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="supercard.png" alt="Supercard">
+        <h3>Supercard Classic</h3>
+        <p>Enjoy discounts, freebies, and exclusive offers every visit!</p>
+      </div>
+      <div class="product-card">
+        <img src="birthdaydiscount.jpg" alt="Promo">
+        <h3>Supercard Exclusive Promos</h3>
+        <p>Get access to special deals only for cardholders.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved |
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

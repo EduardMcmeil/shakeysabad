@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="top-nav">
+    <div class="logo">
+      <img src="shakeyslogo.png" alt="Shakey's Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- Will be injected by JS -->
+    </div>
+  </header>
+
+  <!-- Category Shortcuts -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='promos.html'">Promos</div>
+    <div class="category-item" onclick="location.href='pizza.html'">Pizza</div>
+    <div class="category-item" onclick="location.href='mojos.html'">Chicken ’n Mojos</div>
+    <div class="category-item" onclick="location.href='groupmeals.html'">Group Meals</div>
+  </section>
+
+  <!-- Full Menu -->
+  <section class="featured-products">
+    <h2>All Menu</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="normal.png" alt="Classic Pizza">
+        <h3>Classic Pizza</h3>
+        <p>₱399 - Cheesy, loaded, and baked to perfection</p>
+        <button onclick="addToCart('Classic Pizza', 399, 'normal.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="chicknmojos.png" alt="Chicken Mojos">
+        <h3>Chicken ’n Mojos</h3>
+        <p>₱459 - Signature crispy chicken and mojos</p>
+        <button onclick="addToCart('Chicken Mojos', 459, 'chicknmojos.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="groupmeal.png" alt="Group Meal">
+        <h3>Group Meal</h3>
+        <p>₱999 - Perfect for sharing</p>
+        <button onclick="addToCart('Group Meal', 999, 'groupmeal.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="carbonara.png" alt="Carbonara Supreme">
+        <h3>Carbonara Supreme</h3>
+        <p>₱299 - Creamy white pasta with bacon</p>
+        <button onclick="addToCart('Carbonara Supreme', 299, 'carbonara.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="spaghetti.png" alt="Spaghetti Platter">
+        <h3>Spaghetti Platter</h3>
+        <p>₱299 - Rich tomato sauce with cheese</p>
+        <button onclick="addToCart('Spaghetti Platter', 299, 'spaghetti.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="garlicbread.png" alt="Garlic Bread">
+        <h3>Garlic Bread</h3>
+        <p>₱149 - Buttery, crispy and golden</p>
+        <button onclick="addToCart('Garlic Bread', 149, 'garlicbread.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="mozarella.png" alt="Mozarella Sticks">
+        <h3>Mozarella Sticks</h3>
+        <p>₱189 - Cheesy and crispy snack</p>
+        <button onclick="addToCart('Mozarella Sticks', 189, 'mozarella.png')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="classic.png" alt="Pepperoni Pizza">
+        <h3>Pepperoni Pizza</h3>
+        <p>₱429 - Loaded with spicy pepperoni</p>
+        <button onclick="addToCart('Pepperoni Pizza', 429, 'classic.png')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved |
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript for Login, Logout, and Cart -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function updateCartDisplay() {
+      const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+      return `(<span id="cart-count">${totalItems}</span>)`;
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart ${updateCartDisplay()}
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart ${updateCartDisplay()}
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function addToCart(name, price, image) {
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("Please log in to add to cart.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const existingIndex = cartItems.findIndex(item => item.name === name);
+      if (existingIndex >= 0) {
+        cartItems[existingIndex].quantity += 1;
+      } else {
+        cartItems.push({ name, price, image, quantity: 1 });
+      }
+
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      document.getElementById("cart-count").textContent =
+        cartItems.reduce((acc, item) => acc + item.quantity, 0);
+      alert(`${name} added to cart!`);
+    }
+  </script>
+
+</body>
+</html>

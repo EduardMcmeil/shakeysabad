@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="logo">
+      <img src="shakeyslogo.png" alt="Shakey's Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html">About</a></li> <!-- ✅ Added About page -->
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- JS will inject login/cart -->
+    </div>
+  </header>
+
+  <!-- Category Icons -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='menu.html'">All Menu</div>
+    <div class="category-item" onclick="location.href='promos.html'">Promos</div>
+    <div class="category-item" onclick="location.href='pizza.html'">Pizza</div>
+    <div class="category-item" onclick="location.href='mojos.html'">Chicken ’n Mojos</div>
+    <div class="category-item" onclick="location.href='groupmeals.html'">Group Meals</div>
+  </section>
+
+  <!-- Featured Products or Menu Preview -->
+  <section class="featured-products">
+    <h2>Featured Products</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="pizza.jpg" alt="Pizza">
+        <h3>Manager’s Choice Pizza</h3>
+        <p>Fully loaded with meats and veggies, baked to perfection.</p>
+      </div>
+      <div class="product-card">
+        <img src="mojos.png" alt="Mojos">
+        <h3>Chicken ’n Mojos</h3>
+        <p>Our signature crispy chicken and seasoned potato mojos.</p>
+      </div>
+      <div class="product-card">
+        <img src="supercard.png" alt="SuperCard">
+        <h3>SuperCard Classic</h3>
+        <p>Enjoy exclusive discounts and pizza perks year-round.</p>
+      </div>
+      <div class="product-card">
+        <img src="groupmeal.png" alt="Group Meal">
+        <h3>Group Meal Feast</h3>
+        <p>Perfect for parties and barkadas. Share the goodness.</p>
+      </div>
+      <div class="product-card">
+        <img src="carbonara.png" alt="Carbonara">
+        <h3>Creamy Carbonara</h3>
+        <p>Rich, creamy sauce with bacon bits over al dente pasta.</p>
+      </div>
+      <div class="product-card">
+        <img src="mojopizza.jpg" alt="Mojo Pizza">
+        <h3>Mojo Pizza Fusion</h3>
+        <p>A unique twist combining two Shakey's favorites in one bite.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved |
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JS Script for Login/Logout & Cart Count -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    let cartCount = cartItems.length;
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+             Cart (<span id="cart-count">${cartCount}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+             Cart (<span id="cart-count">${cartCount}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

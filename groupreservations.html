@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Group Reservations - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- Login/Logout/Cart will appear here dynamically -->
+    </div>
+  </header>
+
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='partypackage.html'">Party Packages</div>
+    <div class="category-item" onclick="location.href='birthdaydeals.html'">Birthday Deals</div>
+    <div class="category-item" onclick="location.href='groupreservations.html'">Group Reservations</div>
+  </section>
+
+  <section class="featured-products">
+    <h2>Group Reservations</h2>
+    <p style="text-align: center;">Fill out the form to reserve for large groups.</p>
+    <div id="reservationForm" style="text-align: center; margin-top: 20px;">
+      <input type="text" id="groupName" placeholder="Group Name" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <input type="text" id="dateTime" placeholder="Date & Time" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <input type="number" id="peopleCount" placeholder="Number of People" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <textarea id="groupNotes" placeholder="Additional Notes" rows="4" style="padding:10px; margin:10px; border-radius:5px; width:300px;"></textarea><br>
+      <button class="login-btn" onclick="submitGroupReservation()">Submit Reservation</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved | 
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    // Display login/cart/logout
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function submitGroupReservation() {
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("Please log in first to submit a reservation.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const name = document.getElementById("groupName").value;
+      const date = document.getElementById("dateTime").value;
+      const count = document.getElementById("peopleCount").value;
+
+      if (!name || !date || !count) {
+        alert("Please complete all required fields.");
+        return;
+      }
+
+      alert("Thank you! Your group reservation has been submitted.");
+
+      document.getElementById("groupName").value = "";
+      document.getElementById("dateTime").value = "";
+      document.getElementById("peopleCount").value = "";
+      document.getElementById("groupNotes").value = "";
+    }
+  </script>
+</body>
+</html>

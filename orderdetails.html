@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Details - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="shakeys.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html" class="active">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+      </ul>
+    </nav>
+    <div class="top-right"></div>
+  </header>
+
+  <section class="featured-products">
+    <h2>Order Details</h2>
+    <div style="text-align:center;">
+      <p><strong>Order Number:</strong> <span id="order-id"></span></p>
+      <p><strong>Item:</strong> Manager’s Choice Pizza</p>
+      <p><strong>Price:</strong> ₱599</p>
+      <p><strong>Delivery Address:</strong> FEU Manila</p>
+      <p><strong>Status:</strong> Preparing for delivery</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved | 
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <script>
+    // Load order number
+    const orderId = localStorage.getItem("lastOrderNumber");
+    document.getElementById("order-id").textContent = orderId || "N/A";
+
+    // Login/Logout toggle
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `<button class="login-btn" onclick="logoutUser()">Logout</button>`;
+    } else {
+      topRight.innerHTML = `<a href="login.html"><button class="login-btn">Login</button></a>`;
+    }
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

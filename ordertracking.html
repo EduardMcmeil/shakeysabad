@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Tracking - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html" class="active">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html">About</a></li> <!-- Added About -->
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- Injected by JavaScript -->
+    </div>
+  </header>
+
+  <!-- Track Order Section -->
+  <section class="featured-products">
+    <h2>Track Your Order</h2>
+    <div style="text-align:center;">
+      <p>Enter your order number below:</p>
+      <input id="orderNumber" type="text" placeholder="Order Number" style="padding:10px; margin:10px; border-radius:5px;">
+      <button class="login-btn" onclick="trackOrder()">Track</button>
+      <p style="font-size: 14px; color: gray; margin-top: 10px;">Hint: Try using <strong>12345</strong></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved |
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript for Login/Logout & Order Tracking -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    // Update top-right corner based on login state
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function trackOrder() {
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("You must log in first.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const orderNum = document.getElementById("orderNumber").value.trim();
+
+      if (orderNum === "12345") {
+        localStorage.setItem("lastOrderNumber", orderNum);
+        window.location.href = "orderdetails.html";
+      } else {
+        alert("Order not found. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>

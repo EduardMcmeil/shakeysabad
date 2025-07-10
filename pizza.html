@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pizza - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- JS will fill login/cart -->
+    </div>
+  </header>
+
+  <!-- Category Bar -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='menu.html'">All Menu</div>
+    <div class="category-item" onclick="location.href='promos.html'">Promos</div>
+    <div class="category-item" onclick="location.href='pizza.html'">Pizza</div>
+    <div class="category-item" onclick="location.href='mojos.html'">Chicken ’n Mojos</div>
+    <div class="category-item" onclick="location.href='groupmeals.html'">Group Meals</div>
+  </section>
+
+  <!-- Pizza Products -->
+  <section class="featured-products">
+    <h2>Pizza Selection</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="managerspizza.jpg" alt="Manager's Choice">
+        <h3>Manager’s Choice</h3>
+        <p>Loaded with meats & veggies</p>
+        <button onclick="addToCart('Manager’s Choice', 429, 'pizza.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="hawaiian.png" alt="Hawaiian Delight">
+        <h3>Hawaiian Delight</h3>
+        <p>Sweet pineapple and ham combo</p>
+        <button onclick="addToCart('Hawaiian Delight', 399, 'pizza.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="classic.png" alt="Pepperoni">
+        <h3>Pepperoni</h3>
+        <p>Classic favorite with extra cheese</p>
+        <button onclick="addToCart('Pepperoni', 419, 'pizza.jpg')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved | 
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript for Login/Cart Logic -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function addToCart(name, price, image) {
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("Please log in to add items to your cart.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const existingIndex = cartItems.findIndex(item => item.name === name);
+      if (existingIndex >= 0) {
+        cartItems[existingIndex].quantity += 1;
+      } else {
+        cartItems.push({ name, price, image, quantity: 1 });
+      }
+
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      document.getElementById("cart-count").textContent = getCartCount();
+      alert(name + " added to cart!");
+    }
+  </script>
+
+</body>
+</html>

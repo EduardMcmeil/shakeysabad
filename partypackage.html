@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Party Packages - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html" class="active">Book a Party</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- Injected by JS -->
+    </div>
+  </header>
+
+  <!-- Category Navigation -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='partypackage.html'">Party Packages</div>
+    <div class="category-item" onclick="location.href='birthdaydeals.html'">Birthday Deals</div>
+    <div class="category-item" onclick="location.href='groupreservations.html'">Group Reservations</div>
+  </section>
+
+  <!-- Main Section -->
+  <section class="featured-products">
+    <h2>Party Packages</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="kiddie.jpg" alt="Kiddie Party Package">
+        <h3>Kiddie Party Package</h3>
+        <p>Complete with games, party hats, and pizza!</p>
+      </div>
+      <div class="product-card">
+        <img src="adult.jpg" alt="Adult Party Package">
+        <h3>Adult Party Package</h3>
+        <p>Ideal for office parties and family gatherings</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved | 
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

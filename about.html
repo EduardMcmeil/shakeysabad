@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+  <style>
+    .about-section {
+      background: white;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .about-section h2 {
+      color: #b90000;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .about-section p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .highlight {
+      background: #ffefcc;
+      padding: 20px;
+      border-left: 5px solid #ffcc00;
+      margin-bottom: 30px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #b90000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-back:hover {
+      background: #ff3300;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="logo">
+      <img src="shakeyslogo.png" alt="Shakey's Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+    </nav>
+    <div class="top-right"></div>
+  </header>
+
+  <main class="about-section">
+
+    <div class="highlight">
+      <h2>Meet the Developer: Eduard</h2>
+      <p>Hi! I'm <strong>Eduard</strong>, a dedicated student of <strong>FEU Tech</strong>, currently pursuing my passion for web development, technology, and cybersecurity. I created this website as part of my journey to master real-world digital experiences. I believe in combining function with design, and my approach to this Shakey's site reflects that mission.</p>
+    </div>
+
+    <div>
+      <h2>The Story of Shakey’s Philippines</h2>
+      <p>Shakey’s was founded in 1954 in California, but it was introduced to the Philippines in 1975. Since then, Shakey’s Philippines has become a household name, known for its iconic thin-crust pizzas, Chicken ’n Mojos, and friendly family dining experience. Operated by Shakey’s Pizza Asia Ventures Inc. (SPAVI), it has expanded to hundreds of stores nationwide with a strong delivery and online presence.</p>
+    </div>
+
+    <div>
+      <h2>What Sets Us Apart</h2>
+      <p>Shakey’s Abad Santos isn’t just another pizza store. We go beyond serving food — we deliver moments. Our website was crafted specifically to bring customers a cleaner, faster, and more intuitive ordering experience. With features like category shortcuts, real-time cart status, and exclusive digital-only deals, we bring Shakey’s closer to your fingertips. Unlike generic branches, this one was made by someone who understands both the tech and the taste.</p>
+    </div>
+
+    <a href="index.html" class="btn-back">← Back to Home</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | Developed by Eduard | <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <script>
+    // Reuse login/cart injection logic
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    let cartCount = cartItems.length;
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+             Cart (<span id="cart-count">${cartCount}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+             Cart (<span id="cart-count">${cartCount}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

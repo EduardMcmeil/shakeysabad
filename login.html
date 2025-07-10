@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (username === "admin" && password === "admin") {
+        localStorage.setItem("isLoggedIn", "true");
+
+        const redirectTo = localStorage.getItem("redirectAfterLogin") || "index.html";
+        localStorage.removeItem("redirectAfterLogin");
+
+        alert("Login successful!");
+        window.location.href = redirectTo;
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+
+    window.onload = function () {
+      if (localStorage.getItem("isLoggedIn") === "true") {
+        const redirectTo = localStorage.getItem("redirectAfterLogin") || "index.html";
+        localStorage.removeItem("redirectAfterLogin");
+        window.location.href = redirectTo;
+      }
+    };
+  </script>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html">Book a Party</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <a href="login.html"><button class="login-btn">Login</button></a>
+    </div>
+  </header>
+
+  <section class="featured-products">
+    <h2>Welcome Back!</h2>
+    <form onsubmit="loginUser(event)" style="text-align: center; margin-top: 20px;">
+      <input id="username" type="text" placeholder="Username" required style="padding:10px; margin:10px; border-radius:5px; width:250px;"><br>
+      <input id="password" type="password" placeholder="Password" required style="padding:10px; margin:10px; border-radius:5px; width:250px;"><br>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+    <p style="text-align:center; margin-top:10px;">Hint: admin / admin</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos</p>
+  </footer>
+</body>
+</html>

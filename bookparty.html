@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book a Party - Shakey’s Abad Santos</title>
+  <link rel="stylesheet" href="shakeys.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="logo"><img src="shakeyslogo.png" alt="Shakey's Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="promos.html">Promos</a></li>
+        <li><a href="ordertracking.html">Order Tracking</a></li>
+        <li><a href="supercard.html">Supercard</a></li>
+        <li><a href="bookparty.html" class="active">Book a Party</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <div class="top-right">
+      <!-- JS injects login/cart -->
+    </div>
+  </header>
+
+  <!-- Category Bar -->
+  <section class="category-bar">
+    <div class="category-item" onclick="location.href='partypackage.html'">Party Packages</div>
+    <div class="category-item" onclick="location.href='birthdaydeals.html'">Birthday Deals</div>
+    <div class="category-item" onclick="location.href='groupreservations.html'">Group Reservations</div>
+  </section>
+
+  <!-- Party Booking Form -->
+  <section class="featured-products">
+    <h2>Book a Party</h2>
+    <p style="text-align:center;">Fill out the form below and we’ll help plan your perfect party!</p>
+    <div id="partyForm" style="text-align:center; margin-top: 20px;">
+      <input type="text" id="name" placeholder="Your Name" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <input type="date" id="eventDate" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <input type="number" id="guests" placeholder="Number of Guests" style="padding:10px; margin:10px; border-radius:5px;"><br>
+      <textarea id="notes" placeholder="Additional Notes" rows="4" style="padding:10px; margin:10px; border-radius:5px; width:300px;"></textarea><br>
+      <button class="login-btn" onclick="submitPartyForm()">Submit</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shakey’s Abad Santos | All Rights Reserved |
+      <a href="https://www.shakeyspizza.ph">shakeyspizza.ph</a></p>
+  </footer>
+
+  <!-- JavaScript for Login/Logout + Cart + Form -->
+  <script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const topRight = document.querySelector(".top-right");
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    function getCartCount() {
+      return cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }
+
+    if (isLoggedIn === "true") {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <button class="login-btn" onclick="logoutUser()">Logout</button>
+      `;
+    } else {
+      topRight.innerHTML = `
+        <a href="cart.html">
+          <button class="login-btn" style="background: orange;">
+            Cart (<span id="cart-count">${getCartCount()}</span>)
+          </button>
+        </a>
+        <a href="login.html"><button class="login-btn">Login</button></a>
+      `;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("isLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function submitPartyForm() {
+      const name = document.getElementById("name").value.trim();
+      const date = document.getElementById("eventDate").value.trim();
+      const guests = document.getElementById("guests").value.trim();
+
+      if (!name || !date || !guests) {
+        alert("Please complete all required fields.");
+        return;
+      }
+
+      alert("Thank you! Your party booking request has been submitted.");
+
+      // Clear fields
+      document.getElementById("name").value = "";
+      document.getElementById("eventDate").value = "";
+      document.getElementById("guests").value = "";
+      document.getElementById("notes").value = "";
+    }
+  </script>
+
+</body>
+</html>
